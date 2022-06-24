@@ -22,11 +22,28 @@ function App() {
     completed: false,
   };
 
-  return (
-    <div>
-      <p>Hello World!</p>
+  const item4: Item = {
+    title: "Fourth thing.",
+    completed: false,
+  };
 
-      <Todos items={[item1, item2, item3]} />
+  const item5: Item = {
+    title: "Fifth thing.",
+    completed: true,
+  };
+
+  const item6: Item = {
+    title: "This Sixth thing.",
+    completed: false,
+  };
+
+  return (
+    <div className="">
+      <div className="flex justify-between py-2 px-4">
+        <span className="underline">My To-Do List</span>
+        <span className="underline">Completed Items</span>
+      </div>
+      <Todos items={[item1, item2, item3, item4, item5, item6]} />
     </div>
   );
 }

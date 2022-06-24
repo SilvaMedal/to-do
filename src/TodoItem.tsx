@@ -12,8 +12,12 @@ export type TodoItemProps = {
 
 export function TodoItem({ item }: TodoItemProps) {
   return (
-    <div>
-      {item.title} -- Complete: {item.completed ? "True" : "False"}
+    <div
+      className="flex w-3/5 justify-center bg-lime-600 
+      text-white text-lg font-semibold rounded-lg m-1 
+        px-2 py-1 border-2 border-slate-700"
+    >
+      {item.title}
     </div>
   );
 }
