@@ -7,17 +7,17 @@ export type TodosProps = {
 
 export function Todos({ items }: TodosProps) {
   return (
-    <div /*className="flex"*/>
-      <div className="flex-col">
+    <div className="flex grow justify-between">
+      <div className="flex-col w-3/5">
         {items.map((item) => {
-          if (item.completed) {
+          if (!item.completed) {
             return <TodoItem item={item} />;
           }
         })}
       </div>
-      <div className="flex-col content-end">
+      <div className="flex-col w-1/3">
         {items.map((item) => {
-          if (!item.completed) {
+          if (item.completed) {
             return <CompletedItem item={item} />;
           }
         })}
