@@ -39,13 +39,15 @@ function App() {
 
   return (
     <div className="h-screen bg-amber-100">
-      <div className="">
-        <div className="flex justify-around py-2">
+      <div className="flex justify-between">
+        <div className="flex justify-center w-3/5">
           <span className="underline font-mono text-3xl">My To-Do List</span>
+        </div>
+        <div className="flex justify-center w-1/3">
           <span className="underline font-mono text-2xl">Completed Items</span>
         </div>
-        <Todos items={[item1, item2, item3, item4, item5, item6]} />
       </div>
+      <Todos items={[item1, item2, item3, item4, item5, item6]} />
     </div>
   );
 }
