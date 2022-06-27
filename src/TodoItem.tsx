@@ -1,4 +1,5 @@
 export type Item = {
+  id: number;
   title: string;
   // startDate: Date;
   // endDate?: Date;
@@ -8,16 +9,24 @@ export type Item = {
 
 export type TodoItemProps = {
   item: Item;
+  complete: () => void;
 };
 
-export function TodoItem({ item }: TodoItemProps) {
+export function TodoItem({ item, complete }: TodoItemProps) {
   return (
     <div
-      className="flex justify-center bg-lime-600 
-      text-white text-lg font-semibold rounded-lg m-1 
-        px-2 py-1 border-2 border-slate-700"
+      className="flex justify-between bg-lime-600 rounded-lg m-1 
+      px-2 py-1 border-2 border-slate-700"
     >
-      {item.title}
+      <div
+        className="
+    text-white text-lg font-semibold"
+      >
+        {item.title}
+      </div>
+      <button className="" onClick={complete}>
+        completed?
+      </button>
     </div>
   );
 }
