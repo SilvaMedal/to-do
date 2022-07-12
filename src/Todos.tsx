@@ -1,16 +1,17 @@
 import { Item, TodoItem } from "./TodoItem";
-import { CompletedItem } from "./CompletedItem";
 
 export type TodosProps = {
   items: Item[];
   setCompleted: (id: number, completed: boolean) => void;
 };
 
-/*-Set an "isAdding" state, use ternary to decide if input box appears or if
+/*
+  -Set an "isAdding" state, use ternary to decide if input box appears or if
     "Add Item" button appears. 
   -"Add Item" should set "isAdding" to true.
   -in the input box, will need an "Add" button and "Cancel" button.
-  -
+  -"Cancel" should immediately set "isAdding" state to false, and render
+    using the current state.
 */
 
 export function Todos({ items, setCompleted }: TodosProps) {

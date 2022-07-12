@@ -46,6 +46,8 @@ const initItems = [item1, item2, item3, item4, item5, item6];
 function App() {
   const [items, setItems] = useState(initItems);
 
+  const [isAdding, setIsAdding] = useState();
+
   const setCompleted = (id: number, completed: boolean) => {
     const newItems = [...items];
     const item = newItems.find((item) => item.id == id);
