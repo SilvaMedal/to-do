@@ -1,8 +1,10 @@
+import { ChangeEvent, useState } from "react";
 import { Item, TodoItem } from "./TodoItem";
 
 export type TodosProps = {
   items: Item[];
   setCompleted: (id: number, completed: boolean) => void;
+  addItem: (item: Item) => void;
 };
 
 /*
@@ -14,7 +16,30 @@ export type TodosProps = {
     using the current state.
 */
 
-export function Todos({ items, setCompleted }: TodosProps) {
+export function Todos({ items, setCompleted, addItem }: TodosProps) {
+  const [isAdding, setIsAdding] = useState(false);
+
+  const [newItemTitle, setItemTitle] = useState("");
+
+  const handleAddItem = () => {
+    const item: Item = {
+      id: Math.round(Math.random() * 1000),
+      title: newItemTitle,
+      completed: false,
+    };
+    addItem(item);
+    resetForm();
+  };
+
+  const resetForm = () => {
+    setIsAdding(false);
+    setItemTitle("");
+  };
+
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setItemTitle(event.target.value);
+  };
+
   return (
     <div className="flex-col w-3/5">
       {items.map((item) => (
@@ -25,9 +50,26 @@ export function Todos({ items, setCompleted }: TodosProps) {
         />
       ))}
       <div className="flex justify-center">
-        <button className="px-1 rounded-lg hover:bg-lime-300">
-          +Add Item+
-        </button>
+        {isAdding ? (
+          <div className="flex flex-col space-y-2">
+            <input
+              type="text"
+              value={newItemTitle}
+              onChange={handleTitleChange}
+            />
+            <div className="flex justify-center space-x-2">
+              <button onClick={resetForm}>Cancel</button>
+              <button onClick={handleAddItem}>Add</button>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={() => setIsAdding(true)}
+            className="px-1 rounded-lg hover:bg-lime-300"
+          >
+            +Add Item+
+          </button>
+        )}
       </div>
     </div>
   );

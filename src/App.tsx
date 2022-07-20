@@ -46,7 +46,9 @@ const initItems = [item1, item2, item3, item4, item5, item6];
 function App() {
   const [items, setItems] = useState(initItems);
 
-  const [isAdding, setIsAdding] = useState();
+  const addItem = (item: Item) => {
+    setItems([...items, item]);
+  };
 
   const setCompleted = (id: number, completed: boolean) => {
     const newItems = [...items];
@@ -72,7 +74,11 @@ function App() {
         </div>
       </div>
       <div className="flex grow justify-between">
-        <Todos items={incompleteItems} setCompleted={setCompleted} />
+        <Todos
+          items={incompleteItems}
+          setCompleted={setCompleted}
+          addItem={addItem}
+        />
         <div className="flex-col w-1/3">
           {completedItems.map((item) => (
             <CompletedItem
