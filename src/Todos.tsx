@@ -8,12 +8,7 @@ export type TodosProps = {
 };
 
 /*
-  -Set an "isAdding" state, use ternary to decide if input box appears or if
-    "Add Item" button appears. 
-  -"Add Item" should set "isAdding" to true.
-  -in the input box, will need an "Add" button and "Cancel" button.
-  -"Cancel" should immediately set "isAdding" state to false, and render
-    using the current state.
+ get this working with local storage
 */
 
 export function Todos({ items, setCompleted, addItem }: TodosProps) {
@@ -51,17 +46,19 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
       ))}
       <div className="flex justify-center">
         {isAdding ? (
-          <div className="flex flex-col space-y-2">
+          <form onSubmit={handleAddItem} className="flex flex-col space-y-2">
             <input
               type="text"
               value={newItemTitle}
               onChange={handleTitleChange}
             />
             <div className="flex justify-center space-x-2">
-              <button onClick={resetForm}>Cancel</button>
-              <button onClick={handleAddItem}>Add</button>
+              <button type="reset" onClick={resetForm}>
+                Cancel
+              </button>
+              <button type="submit">Add</button>
             </div>
-          </div>
+          </form>
         ) : (
           <button
             onClick={() => setIsAdding(true)}
