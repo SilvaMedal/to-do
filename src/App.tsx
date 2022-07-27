@@ -24,8 +24,7 @@ function App() {
     const newItems = [...items];
     const item = newItems.find((item) => item.id == id);
     if (item) {
-      item.completed = completed;
-      item.completedDate = Date.now();
+      item.completedAt = completed ? Date.now() : undefined;
     }
     updateStorage(newItems);
   };
@@ -44,9 +43,12 @@ function App() {
     }
   };
 
-  const incompleteItems = items.filter((item) => !item.completed);
+  const incompleteItems = items.filter((item) => !item.completedAt);
 
-  const completedItems = items.filter((item) => item.completed);
+  const completedItems = items
+    .filter((item) => item.completedAt)
+    //.sort((a, b) => b.completedAt! - a.completedAt!); \/-- same as below.
+    .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0));
 
   const resetCompletedItems = () => {
     if (
@@ -74,7 +76,7 @@ function App() {
           setCompleted={setCompleted}
           addItem={addItem}
         />
-        <div className="flex-col-reverse w-1/3">
+        <div className="w-1/3">
           {completedItems.map((item) => (
             <CompletedItem
               key={item.id}

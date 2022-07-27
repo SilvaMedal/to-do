@@ -23,7 +23,6 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
     const item: Item = {
       id: Date.now(),
       title: newItemTitle,
-      completed: false,
     };
     addItem(item);
     resetForm();
@@ -39,7 +38,7 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
   };
 
   return (
-    <div className="flex-col w-3/5">
+    <div className="w-3/5">
       {items.map((item) => (
         <TodoItem
           key={item.id}

@@ -1,8 +1,7 @@
 export type Item = {
   id: number;
   title: string;
-  completed: boolean;
-  completedDate?: number;
+  completedAt?: number;
 };
 
 export type TodoItemProps = {
