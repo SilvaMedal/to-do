@@ -1,10 +1,8 @@
 export type Item = {
   id: number;
   title: string;
-  // startDate: Date;
-  // endDate?: Date;
-  notes?: string;
   completed: boolean;
+  completedDate?: number;
 };
 
 export type TodoItemProps = {

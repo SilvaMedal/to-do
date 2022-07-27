@@ -8,7 +8,10 @@ export type TodosProps = {
 };
 
 /*
- get this working with local storage
+-Style the input box
+-set priorities/sorting method based oldest in list?
+-add a way to edit the items already in the list
+    -(use "setCompleted" from App as base for "setTitle" in ToDoItem for editing purposes)
 */
 
 export function Todos({ items, setCompleted, addItem }: TodosProps) {
@@ -18,7 +21,7 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
 
   const handleAddItem = () => {
     const item: Item = {
-      id: Math.round(Math.random() * 1000),
+      id: Date.now(),
       title: newItemTitle,
       completed: false,
     };
@@ -51,6 +54,7 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
               type="text"
               value={newItemTitle}
               onChange={handleTitleChange}
+              autoFocus
             />
             <div className="flex justify-center space-x-2">
               <button type="reset" onClick={resetForm}>
