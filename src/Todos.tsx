@@ -5,16 +5,20 @@ export type TodosProps = {
   items: Item[];
   setCompleted: (id: number, completed: boolean) => void;
   addItem: (item: Item) => void;
+  updateItem: (item: Item, editedTitle: string) => void;
 };
 
 /*
 -Style the input box
 -set priorities/sorting method based oldest in list?
--add a way to edit the items already in the list
-    -(use "setCompleted" from App as base for "setTitle" in ToDoItem for editing purposes)
 */
 
-export function Todos({ items, setCompleted, addItem }: TodosProps) {
+export function Todos({
+  items,
+  setCompleted,
+  addItem,
+  updateItem,
+}: TodosProps) {
   const [isAdding, setIsAdding] = useState(false);
 
   const [newItemTitle, setItemTitle] = useState("");
@@ -44,6 +48,7 @@ export function Todos({ items, setCompleted, addItem }: TodosProps) {
           key={item.id}
           item={item}
           complete={() => setCompleted(item.id, true)}
+          updateItem={updateItem}
         />
       ))}
       <div className="flex justify-center">

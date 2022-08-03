@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import { CompletedItem } from "./CompletedItem";
-import { Item } from "./TodoItem";
+import { Item, TodoItem } from "./TodoItem";
 import { Todos } from "./Todos";
 
 function App() {
@@ -17,6 +17,12 @@ function App() {
 
   const addItem = (item: Item) => {
     const updatedItems = [...items, item];
+    updateStorage(updatedItems);
+  };
+
+  const handleEditItem = (item: Item, editedTitle: string) => {
+    item.title = editedTitle;
+    const updatedItems = [...items];
     updateStorage(updatedItems);
   };
 
@@ -75,6 +81,7 @@ function App() {
           items={incompleteItems}
           setCompleted={setCompleted}
           addItem={addItem}
+          updateItem={handleEditItem}
         />
         <div className="w-1/3">
           {completedItems.map((item) => (
