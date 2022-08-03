@@ -1,11 +1,10 @@
 import { ChangeEvent, useState } from "react";
-import { Item, TodoItem } from "./TodoItem";
+import { Item, ItemMutableProps, TodoItem } from "./TodoItem";
 
 export type TodosProps = {
   items: Item[];
-  setCompleted: (id: number, completed: boolean) => void;
   addItem: (item: Item) => void;
-  updateItem: (item: Item, editedTitle: string) => void;
+  updateItem: (item: Item, updates: ItemMutableProps) => void;
 };
 
 /*
@@ -13,12 +12,7 @@ export type TodosProps = {
 -set priorities/sorting method based oldest in list?
 */
 
-export function Todos({
-  items,
-  setCompleted,
-  addItem,
-  updateItem,
-}: TodosProps) {
+export function Todos({ items, addItem, updateItem }: TodosProps) {
   const [isAdding, setIsAdding] = useState(false);
 
   const [newItemTitle, setItemTitle] = useState("");
@@ -44,12 +38,7 @@ export function Todos({
   return (
     <div className="w-3/5">
       {items.map((item) => (
-        <TodoItem
-          key={item.id}
-          item={item}
-          complete={() => setCompleted(item.id, true)}
-          updateItem={updateItem}
-        />
+        <TodoItem key={item.id} item={item} updateItem={updateItem} />
       ))}
       <div className="flex justify-center">
         {isAdding ? (

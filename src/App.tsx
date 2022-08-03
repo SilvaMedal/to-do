@@ -2,7 +2,7 @@ import { useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import { CompletedItem } from "./CompletedItem";
-import { Item, TodoItem } from "./TodoItem";
+import { Item, ItemMutableProps, TodoItem } from "./TodoItem";
 import { Todos } from "./Todos";
 
 function App() {
@@ -20,18 +20,11 @@ function App() {
     updateStorage(updatedItems);
   };
 
-  const handleEditItem = (item: Item, editedTitle: string) => {
-    item.title = editedTitle;
-    const updatedItems = [...items];
-    updateStorage(updatedItems);
-  };
-
-  const setCompleted = (id: number, completed: boolean) => {
+  const updateItem = (item: Item, updates: ItemMutableProps) => {
     const newItems = [...items];
-    const item = newItems.find((item) => item.id == id);
-    if (item) {
-      item.completedAt = completed ? Date.now() : undefined;
-    }
+    const updatedItem: Item = { ...item, ...updates };
+    const itemIndex = newItems.indexOf(item);
+    newItems.splice(itemIndex, 1, updatedItem);
     updateStorage(newItems);
   };
 
@@ -79,16 +72,15 @@ function App() {
       <div className="flex grow justify-between">
         <Todos
           items={incompleteItems}
-          setCompleted={setCompleted}
           addItem={addItem}
-          updateItem={handleEditItem}
+          updateItem={updateItem}
         />
         <div className="w-1/3">
           {completedItems.map((item) => (
             <CompletedItem
               key={item.id}
               item={item}
-              undo={() => setCompleted(item.id, false)}
+              undo={() => updateItem(item, { completedAt: undefined })}
               remove={() => removeCompleted(item.id)}
             />
           ))}

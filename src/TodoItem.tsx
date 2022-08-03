@@ -6,10 +6,11 @@ export type Item = {
   completedAt?: number;
 };
 
+export type ItemMutableProps = Partial<Omit<Item, "id">>;
+
 export type TodoItemProps = {
   item: Item;
-  complete: () => void;
-  updateItem: (item: Item, editedTitle: string) => void;
+  updateItem: (item: Item, updates: ItemMutableProps) => void;
 };
 
 // add edit button here, and display input box containing current title with option to change or cancel
@@ -19,15 +20,14 @@ export type TodoItemProps = {
 // 4. save button should actually work (update the state using new title) pass this component a function to update the state
 // 5.
 
-export function TodoItem({ item, complete, updateItem }: TodoItemProps) {
+export function TodoItem({ item, updateItem }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const [editedTitle, setEditedTitle] = useState(item.title);
 
   const handleEdit = () => {
-    updateItem(item, editedTitle);
+    updateItem(item, { title: editedTitle });
     setIsEditing(false);
-    setEditedTitle(editedTitle);
   };
 
   const resetEdit = () => {
@@ -68,12 +68,14 @@ export function TodoItem({ item, complete, updateItem }: TodoItemProps) {
             <span className="text-white text-lg font-semibold">
               {item.title}
             </span>
-            {/* create a function that opens input options and sets state */}
             <button className="" onClick={() => setIsEditing(true)}>
               edit?
             </button>
           </div>
-          <button className="" onClick={complete}>
+          <button
+            className=""
+            onClick={() => updateItem(item, { completedAt: Date.now() })}
+          >
             completed?
           </button>
         </div>
