@@ -4,6 +4,7 @@ import "./App.css";
 import { CompletedItem } from "./CompletedItem";
 import { Item, ItemMutableProps, TodoItem } from "./TodoItem";
 import { Todos } from "./Todos";
+import { MenuAlt1Icon } from "@heroicons/react/outline";
 
 function App() {
   const [items, setItems] = useState<Item[]>(
@@ -61,12 +62,23 @@ function App() {
   return (
     <div className="h-screen bg-amber-100">
       <div className="flex justify-between">
-        <div className="flex justify-center w-3/5">
+        <div className="flex justify-center w-3/5 space-x-2">
           <span className="underline font-mono text-3xl">My To-Do List</span>
+          <button>
+            <div className="tooltip">
+              <MenuAlt1Icon className="h-5 w-5 hover:stroke-white hover:bg-black" />
+              <span className="display-bottom text-sm">Sort Items</span>
+            </div>
+          </button>
         </div>
         <div className="flex justify-center w-1/3 space-x-2">
           <span className="underline font-mono text-2xl">Completed Items</span>
-          <button onClick={resetCompletedItems}>Clear List?</button>
+          <div className="tooltip">
+            <button onClick={resetCompletedItems}>Clear List?</button>
+            <span className="display-bottom display-left">
+              Clear "Completed Items"
+            </span>
+          </div>
         </div>
       </div>
       <div className="flex grow justify-between">
