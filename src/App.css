@@ -40,3 +40,41 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .display-left,
+.tooltip .display-right,
+.tooltip .display-bottom {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+}
+
+.tooltip:hover .display-right,
+.tooltip:hover .display-left,
+.tooltip:hover .display-bottom {
+  visibility: visible;
+}
+
+.tooltip .display-left{
+  right: 105%;
+}
+
+.tooltip .display-right {
+  left: 105%;
+}
+
+.tooltip .display-bottom{
+  top: 105%;
+}

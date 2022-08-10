@@ -2,83 +2,98 @@ import { useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 import { CompletedItem } from "./CompletedItem";
-import { Item } from "./TodoItem";
+import { Item, ItemMutableProps, TodoItem } from "./TodoItem";
 import { Todos } from "./Todos";
-
-const item1: Item = {
-  id: 1,
-  title: "First thing.",
-  completed: true,
-};
-
-const item2: Item = {
-  id: 2,
-  title: "Second thing.",
-  completed: false,
-};
-
-const item3: Item = {
-  id: 3,
-  title: "Third thing.",
-  completed: true,
-};
-
-const item4: Item = {
-  id: 4,
-  title: "Fourth thing.",
-  completed: false,
-};
-
-const item5: Item = {
-  id: 5,
-  title: "Fifth thing.",
-  completed: true,
-};
-
-const item6: Item = {
-  id: 6,
-  title: "This Sixth thing.",
-  completed: true,
-};
-
-const initItems = [item1, item2, item3, item4, item5, item6];
+import { MenuAlt1Icon } from "@heroicons/react/outline";
 
 function App() {
-  const [items, setItems] = useState(initItems);
+  const [items, setItems] = useState<Item[]>(
+    JSON.parse(localStorage.getItem("our-items") || "")
+  );
 
-  const [isAdding, setIsAdding] = useState();
-
-  const setCompleted = (id: number, completed: boolean) => {
-    const newItems = [...items];
-    const item = newItems.find((item) => item.id == id);
-    if (item) {
-      item.completed = completed;
-    }
-    setItems(newItems);
+  const updateStorage = (ourItems: Item[]) => {
+    localStorage.setItem("our-items", JSON.stringify(ourItems));
+    setItems(ourItems);
   };
 
-  const incompleteItems = items.filter((item) => !item.completed);
+  const addItem = (item: Item) => {
+    const updatedItems = [...items, item];
+    updateStorage(updatedItems);
+  };
 
-  const completedItems = items.filter((item) => item.completed);
+  const updateItem = (item: Item, updates: ItemMutableProps) => {
+    const newItems = [...items];
+    const updatedItem: Item = { ...item, ...updates };
+    const itemIndex = newItems.indexOf(item);
+    newItems.splice(itemIndex, 1, updatedItem);
+    updateStorage(newItems);
+  };
+
+  const removeCompleted = (id: number) => {
+    const newItems = [...items];
+    const itemIndex = newItems.findIndex((item) => item.id == id);
+    if (
+      itemIndex != -1 &&
+      window.confirm(
+        `Are you sure you want to delete "${newItems[itemIndex].title}" from your list?`
+      )
+    ) {
+      newItems.splice(itemIndex, 1);
+      updateStorage(newItems);
+    }
+  };
+
+  const incompleteItems = items.filter((item) => !item.completedAt);
+
+  const completedItems = items
+    .filter((item) => item.completedAt)
+    //.sort((a, b) => b.completedAt! - a.completedAt!); \/-- same as below.
+    .sort((a, b) => (b.completedAt ?? 0) - (a.completedAt ?? 0));
+
+  const resetCompletedItems = () => {
+    if (
+      completedItems.length > 0 &&
+      window.confirm("You are about to PERMANENTLY DELETE 'Completed Items'!")
+    ) {
+      updateStorage(incompleteItems);
+    }
+  };
 
   return (
     <div className="h-screen bg-amber-100">
       <div className="flex justify-between">
-        <div className="flex justify-center w-3/5">
+        <div className="flex justify-center w-3/5 space-x-2">
           <span className="underline font-mono text-3xl">My To-Do List</span>
+          <button>
+            <div className="tooltip">
+              <MenuAlt1Icon className="h-5 w-5 hover:stroke-white hover:bg-black" />
+              <span className="display-bottom text-sm">Sort Items</span>
+            </div>
+          </button>
         </div>
-        <div className="flex justify-center w-1/3">
+        <div className="flex justify-center w-1/3 space-x-2">
           <span className="underline font-mono text-2xl">Completed Items</span>
+          <div className="tooltip">
+            <button onClick={resetCompletedItems}>Clear List?</button>
+            <span className="display-bottom display-left">
+              Clear "Completed Items"
+            </span>
+          </div>
         </div>
       </div>
       <div className="flex grow justify-between">
-        <Todos items={incompleteItems} setCompleted={setCompleted} />
-        <div className="flex-col w-1/3">
+        <Todos
+          items={incompleteItems}
+          addItem={addItem}
+          updateItem={updateItem}
+        />
+        <div className="w-1/3">
           {completedItems.map((item) => (
             <CompletedItem
               key={item.id}
               item={item}
-              undo={() => setCompleted(item.id, false)}
+              undo={() => updateItem(item, { completedAt: undefined })}
+              remove={() => removeCompleted(item.id)}
             />
           ))}
         </div>
