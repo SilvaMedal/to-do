@@ -12,10 +12,10 @@ export type TodosProps = {
 1. How to prevent both edit and add from being open simultaneously
   (could be done with a "global editing" state, want to render a "disabled" style to the un-editing buttons)
   (tailwind class "pointer-events-none")
-2. Make the "title" required (ie: no empty strings)
-3. Add complete-by dates? Sorting methods (based on "priority")
-4. Cover letter
-5. Add animation to tooltips
+2. Add complete-by dates? Sorting methods (based on "priority")
+3. 
+4. 
+5.
 */
 
 export function Todos({ items, addItem, updateItem }: TodosProps) {
