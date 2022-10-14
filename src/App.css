@@ -59,12 +59,15 @@ button {
   position: absolute;
   z-index: 1;
   top: -5px;
+  opacity: 0;
 }
 
 .tooltip:hover .display-right,
 .tooltip:hover .display-left,
 .tooltip:hover .display-bottom {
   visibility: visible;
+  opacity: 1;
+  transition: opacity 0s linear 1s;
 }
 
 .tooltip .display-left{
