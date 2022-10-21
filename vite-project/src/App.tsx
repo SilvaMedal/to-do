@@ -8,7 +8,7 @@ import { MenuAlt1Icon } from "@heroicons/react/outline";
 
 function App() {
   const [items, setItems] = useState<Item[]>(
-    JSON.parse(localStorage.getItem("our-items") || "")
+    JSON.parse(localStorage.getItem("our-items") || "[]")
   );
 
   const updateStorage = (ourItems: Item[]) => {
