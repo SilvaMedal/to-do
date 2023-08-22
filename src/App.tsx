@@ -1,10 +1,10 @@
 import { useState } from "react";
 // import logo from "./logo.svg";
+import { MenuAlt1Icon } from "@heroicons/react/outline";
 import "./App.css";
 import { CompletedItem } from "./CompletedItem";
-import { Item, ItemMutableProps, TodoItem } from "./TodoItem";
+import { Item, ItemMutableProps } from "./TodoItem";
 import { Todos } from "./Todos";
-import { MenuAlt1Icon } from "@heroicons/react/outline";
 
 function App() {
   const [items, setItems] = useState<Item[]>(
@@ -67,7 +67,9 @@ function App() {
           <button>
             <div className="tooltip">
               <MenuAlt1Icon className="h-5 w-5 hover:stroke-white hover:bg-black" />
-              <span className="display-bottom text-sm">Sort Items</span>
+              <span className="display-bottom text-sm">
+                Sort Items /coming soon/
+              </span>
             </div>
           </button>
         </div>
