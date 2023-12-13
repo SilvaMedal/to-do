@@ -5,7 +5,7 @@ import "./App.css";
 import { CompletedItem } from "./CompletedItem";
 import { Item, ItemMutableProps } from "./TodoItem";
 import { Todos } from "./Todos";
-
+//
 function App() {
   const [items, setItems] = useState<Item[]>(
     JSON.parse(localStorage.getItem("our-items") || "[]")
